@@ -1,0 +1,6 @@
+@MealTrackerApi_HostAddress = http://localhost:5255
+
+GET {{MealTrackerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
