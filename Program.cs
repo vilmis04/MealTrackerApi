@@ -1,8 +1,17 @@
+using dotenv.net;
+using MealTrackerApi.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MealContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MealContext") ?? throw new InvalidOperationException("Connection string 'MealContext' not found.")));
+
+// builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
+// builder.Configuration.AddJsonFile("appsettings.json", true);
+// builder.Configuration.AddEnvironmentVariables();
+IConfiguration configuration = builder.Configuration;
+
+DotEnv.Load();
 
 // Add services to the container.
 

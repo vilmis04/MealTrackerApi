@@ -1,34 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MealTrackerApi.MealAPI;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using MealTrackerApi.Data;
 
-namespace MealTrackerApi.Controllers
+namespace MealTrackerApi.MealAPI
 {
-    [Route("api/[controller]")]
+    [Route("api/meal")]
     [ApiController]
-    public class MealController : ControllerBase
+    public class MealController(MealContext context) : ControllerBase
     {
-        private readonly MealContext _context;
-
-        public MealController(MealContext context)
-        {
-            _context = context;
-        }
+        private readonly MealContext _context = context;
 
         // GET: api/Meal
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Meal>>> GetMeal()
+        /*public async Task<ActionResult<IEnumerable<Meal>>> GetMeal()*/
+        public IEnumerable<Meal> GetMeal()
         {
+            IEnumerable<Meal> meals = [
+                new Meal { Id = "1", Name = "Burger", Calories = "500", Date = DateTime.UtcNow },
+                new Meal { Id = "2", Name = "Fries", Calories = "300", Date = DateTime.UtcNow },
+                new Meal { Id = "3", Name = "Cola", Calories = "450", Date = DateTime.UtcNow },
+                new Meal { Id = "4", Name = "Sauce", Calories = "800", Date = DateTime.UtcNow },
+            ];
 
-            // Meal meal = new() { Id = "1", Name = "Burger", Calories = "500" };
-            // return meal;
-            return await _context.Meal.ToListAsync();
+
+            return meals;
+            /*return await _context.Meal.ToListAsync();*/
         }
 
         // GET: api/Meal/5
@@ -36,7 +32,7 @@ namespace MealTrackerApi.Controllers
         public ActionResult<Meal> GetMeal(string id)
         {
             // var meal = await _context.Meal.FindAsync(id);
-            var meal = new Meal { Id = "1", Name = "Burger", Calories = "500" };
+            var meal = new Meal { Id = "1", Name = "Burger", Calories = "500", Date = DateTime.UtcNow };
 
             if (meal == null)
             {
