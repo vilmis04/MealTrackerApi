@@ -14,11 +14,13 @@ IConfiguration configuration = builder.Configuration;
 DotEnv.Load();
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var envVars = DotEnv.Read();
+builder.Services.AddDbContext<MealContext>(options => options.UseSqlServer(envVars["DB_CONNECTION_STRING"]));
 
 var app = builder.Build();
 
